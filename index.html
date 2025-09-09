@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mutlu 1 Ayımız ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#0d0a1a;
+    color:#fff;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* Arka plan video */
+  #bgVideo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+    filter:brightness(40%);
+  }
+
+  .center{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+    min-height:100vh;
+    position:relative;
+    z-index:1;
+  }
+
+  h1{
+    font-family:'Dancing Script', cursive;
+    font-size:3em;
+    margin-bottom:20px;
+    color:#ffdde1;
+    text-shadow:0 0 10px #ff6b99;
+  }
+
+  button{
+    padding:14px 32px;
+    font-size:20px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff6b99,#ffd166);
+    cursor:pointer;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+    transition:0.3s;
+  }
+  button:hover{
+    opacity:0.9;
+    transform:scale(1.05);
+  }
+
+  .hidden{display:none}
+
+  /* Mesaj yazısı */
+  .message{
+    max-width:800px;
+    margin:auto;
+    font-size:20px; /* okunaklı boyut */
+    line-height:1.6; /* rahat okunur */
+    white-space:pre-line;
+    text-align:center;
+    font-family:'Poppins', sans-serif; /* okunaklı ve şık */
+    color:#ffddee;
+    text-shadow: 0 0 6px #ff6b99; /* hafif gölge */
+  }
+
+  .typing{border-right:.15em solid #ff6b99;overflow:hidden}
+
+  video.music{
+    width:720px;
+    max-width:90%;
+    margin-top:20px;
+    border-radius:12px;
+    box-shadow:0 0 25px rgba(255,107,153,.5);
+  }
+
+  .hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-2}
+  .heart{
+    position:absolute;
+    color:rgba(255,107,153,.7);
+    font-size:24px;
+    animation:float 6s linear infinite;
+  }
+  @keyframes float{0%{transform:translateY(100vh) scale(1)}100%{transform:translateY(-10vh) scale(0.5)}}
+
+  /* Alt yazı */
+  .love-text{
+    font-family:'Dancing Script', cursive;
+    font-size:24px;
+    color:#ffdde1;
+    margin-top:20px;
+    text-shadow:0 0 10px #ff6b99;
+  }
+
+  /* Popup */
+  #popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+    z-index:10;
+  }
+  #popupMessage{
+    font-size:20px;
+    line-height:1.6;
+    max-width:800px;
+    margin-bottom:20px;
+    white-space:pre-line;
+    text-align:center;
+    font-family:'Poppins', sans-serif; /* okunaklı font */
+    color:#ffddee;
+    text-shadow:0 0 6px #ff6b99;
+  }
+  #popupILoveYou{
+    font-size:36px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#ff6b99,#ffd166,#6bffb8,#69a9ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    cursor:pointer;
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Arka plan video -->
+<video id="bgVideo" autoplay muted loop>
+  <source src="videos/video1.mp4" type="video/mp4">
+</video>
+
+<!-- İlk ekran -->
+<div id="welcome" class="center">
+  <h1>Hazır mısın Yusra? 💖</h1>
+  <button id="yesBtn">Evet</button>
+</div>
+
+<!-- Mesaj ekranı -->
+<div id="content" class="center hidden">
+  <div id="typed" class="message typing"></div>
+  <div id="extraBtnContainer" class="hidden">
+    <button id="popupBtn">Basmak ister misin?</button>
+  </div>
+  <video class="music" autoplay controls loop>
+    <source src="video/diger_yarim.mp4" type="video/mp4">
+  </video>
+  <div class="hearts" id="hearts"></div>
+  <div class="love-text">Yusra (∞) Emirhan</div>
+</div>
+
+<!-- Popup -->
+<div id="popup">
+  <div id="popupMessage"></div>
+  <div id="popupILoveYou" class="hidden">-I LOVE YOU-</div>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const welcome = document.getElementById("welcome");
+const content = document.getElementById("content");
+const typed = document.getElementById("typed");
+const extraBtnContainer = document.getElementById("extraBtnContainer");
+const popupBtn = document.getElementById("popupBtn");
+const popup = document.getElementById("popup");
+const popupMessage = document.getElementById("popupMessage");
+const popupILoveYou = document.getElementById("popupILoveYou");
+
+// Ana mesaj
+const message = `Sevgilim bugün 1 ayımız ❤️
+10.08.2025'te tanıştık ve sen benim hellloookityimm oldun, aslında herşeyim oldun ve iyi ki de oldun 💖
+Bu kadar hızlı zaman nasıl geçti bilmiyorum ama seninle çok güzel geçti ve her saniyesi o kadar güzeldi ki anlatamam, buraya da sığmaz 🌸
+
+Rabbim bizi bir ömür beraber mutlu ve huzurlu daim etsin.💐
+Seninle olucak her şeye kabulum; o gülüşüne, bakışlarına, kaşlarına, her zerrene kabulum 💕
+Seninle her anı yaşamak, her anı paylaşmak, her anı seninle geçirmek istiyorum💞
+Seni çok seviyorum, iyi ki tanışmışız ve hayatımın her şeyi olmuşsun ✨
+İYİ Kİ VARSIN, İYİ Kİ BENİMLESİN 🤍
+
+Birinci ayımız kutlu olsun sevgilim 🎉🎉`;
+
+// Popup mesajı
+const popupMessageText = `Sevgilim bugün tanışmamızın üstünden geçen 1 ay. nasıl geçti nasıl bu kadar güzel hızlı geçti hiç bilmiyorum ama bildiğim bir şey varsa seni çok sevdiğim ve hayatımda en değerli kişi olduğun. 
+O gülüşün bakışların konuşman sesin saçların yanakların daha doğrusu her bir ayrıntın o kadar güzel ki anlatamam. 
+Sen çirkinim diyorsun ama bilmediğin bir şey var ben biliyorum senin evrenin en güzel kadını olman. 
+Ben yanına yakışırmıyım acaba düşünüyorum senin gibi mükemmel tatlı birisine sahip olduğum için çok şanslıyım. 
+AŞKIM SENİ ÇOK SEVİYORUM İYİKİ HAYATIMDASIN.`;
+
+// Typewriter effect
+function typeText(text, element, callback=null, i=0){
+  if(i < text.length){
+    element.textContent = text.substring(0,i+1);
+    setTimeout(()=>typeText(text,element,callback,i+1),50);
+  } else {
+    element.classList.remove("typing");
+    if(callback) callback();
+  }
+}
+
+// Kalpler efekti
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💖";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (16+Math.random()*24)+"px";
+  heart.style.animationDuration = (4+Math.random()*4)+"s";
+  document.getElementById("hearts").appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,400);
+
+// Başla butonu
+yesBtn.addEventListener("click", ()=>{
+  welcome.classList.add("hidden");
+  content.classList.remove("hidden");
+  const music = document.querySelector('.music');
+  music.play();
+  typeText(message,typed,()=>extraBtnContainer.classList.remove("hidden"));
+});
+
+// Popup açma
+popupBtn.addEventListener("click", ()=>{
+  popup.style.display = "flex";
+  popupMessage.textContent = "";
+  typeText(popupMessageText,popupMessage,()=>popupILoveYou.classList.remove("hidden"));
+});
+
+// I LOVE YOU efekti
+popupILoveYou.addEventListener("click", ()=>{
+  for(let i=0;i<30;i++){
+    setTimeout(()=>{
+      const emoji = document.createElement("div");
+      emoji.textContent = ["💖","💋","🎉","😍"][Math.floor(Math.random()*4)];
+      emoji.style.position = "fixed";
+      emoji.style.left = Math.random()*100 + "vw";
+      emoji.style.top = Math.random()*100 + "vh";
+      emoji.style.fontSize = (24+Math.random()*30)+"px";
+      emoji.style.animation = "float 5s linear";
+      document.body.appendChild(emoji);
+      setTimeout(()=>emoji.remove(),5000);
+    },i*100);
+  }
+  setTimeout(()=>{
+    popup.style.display="none";
+  },2000);
+});
+</script>
+</body>
+</html>
